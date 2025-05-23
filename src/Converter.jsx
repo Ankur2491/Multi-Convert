@@ -104,6 +104,8 @@ export default function Converter({ fromType, toType }) {
             result = result.concat(convertPropToYaml(json[ key ], _prefix));
         } else {
             _prefix = prefix ? prefix.concat(key) : key;
+            //added the following to replace arr.0.someting with arr[0].something
+            _prefix = _prefix.replace(/\.([0-9]+)(?=\.|$)/g, '[$1]')
             result.push(_prefix.concat('=').concat(json[ key ]));
         }
     });
